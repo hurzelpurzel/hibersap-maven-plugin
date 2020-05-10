@@ -1,14 +1,9 @@
-== addon-hibersap
+== hibersap-maven-plugin
 :idprefix: id_ 
-This addon provides *standalone* functionality.
+This maven plugin was inspired by
+and  partly reuses code of the https://github.com/forge/plugin-hibersap.
 
-The addon-hibersap addon enables generation of Hibersap Objects by accessing
-
-This addon is the reimplemtation of the https://github.com/forge/plugin-hibersap
-to enable the use with JBoss Forge 3.x
-
-Used resources for the reimplementation
-https://forge.jboss.org/document/develop-an-addon
+The intention is to generate Hibersap Bapi classes by accessing the SAP RFC_READ_TABLE module.
 
 
 === Depends on
@@ -27,9 +22,10 @@ https://forge.jboss.org/document/develop-an-addon
 
 == Setup
 
-This Addon requires the following installation steps.
+can be seen in sister project sapgw-sample
 
 === Add configuration to pom.xml 
+can be seen in sister project sapgw-sample
 
 To use this addon, you must add it as a dependency in the *pom.xml* of your `forge-addon` classified artifact:
 (Make sure the dependency is put all the way to the left, and uses 3 spaces for indentation of GAV)
@@ -43,28 +39,3 @@ To use this addon, you must add it as a dependency in the *pom.xml* of your `for
 </dependency>
 ----
 == Features
-ABCFactory for simple ABC blah:: 
-Allows for blah blah
-+
-[source,java]
-----
-@Inject private ABCFactory factory;
-ABC abc = factory.createABC();
-----
-+
-[TIP] 
-====
-If your addon uses a container that does not support "@Inject" annotations, services such as the `ABCFactory` may also be 
-accessed via the `AddonRegistry`:
-----
-Imported<ABCFactory> imported = addonRegistry.getServices(ABCFactory.class);
-ABCFactory factory = imported.get();
-----
-==== 
-Creating a new XYZ instance:: 
-Causes XYZ to occur
-+
-[source,java]
-----
-XYZ xyz = factory.createXYZ();
-----
