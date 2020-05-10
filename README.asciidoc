@@ -44,9 +44,10 @@ session-manager.name=SM001
 
 Details can be seen in sister project  https://github.com/hurzelpurzel/sapgw-sample
 
-=== Add configuration to pom.xml 
+=== Configuration properties
+[options="header"]
 |===
-|Propert |Optional|Comemnt
+|Propert< |Optional|Comemnt
 |connectionProperties
 |no
 |Path to directory where sap-connection.properties can be found.
@@ -64,6 +65,7 @@ Details can be seen in sister project  https://github.com/hurzelpurzel/sapgw-sam
 |Folder to use for generated Java classes
 |===
 
+=== Add configuration to pom.xml 
 
 To use this plugin, you must add it as a plugin in the *pom.xml* and configure it.
 [source,xml]
