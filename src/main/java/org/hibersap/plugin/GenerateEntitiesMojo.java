@@ -1,6 +1,7 @@
 package org.hibersap.plugin;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -9,9 +10,11 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.hibersap.configuration.AnnotationConfiguration;
 import org.hibersap.configuration.xml.SessionManagerConfig;
 import org.hibersap.generation.bapi.ReverseBapiMapper;
+import org.hibersap.generator.manager.ConnectionPropertiesManager;
 import org.hibersap.generator.sap.SAPEntity;
 import org.hibersap.generator.sap.SAPEntityBuilder;
 import org.hibersap.generator.sap.SAPFunctionModuleSearch;
+import org.hibersap.generator.util.FilterCollection;
 import org.hibersap.generator.util.Utils;
 import org.hibersap.mapping.model.BapiMapping;
 import org.hibersap.session.Session;
@@ -20,7 +23,10 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,15 +35,15 @@ import java.util.Set;
  * see: https://dzone.com/articles/tutorial-create-a-maven-plugin
  */
 @Mojo(name = "generateSapEntities", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GenerateEntitiesMojo extends AbstractSAPMojo {
+public class GenerateEntitiesMojo extends AbstractMojo {
 
 
 
 
-    @Parameter(property ="name-pattern", required = true)
+    @Parameter(property ="namePattern", required = true)
     private String namePattern;
 
-    @Parameter(property = "max-results", required = false,  defaultValue = "20")
+    @Parameter(property = "maxResults", required = false,  defaultValue = "20")
     private Integer maxResults;
 
     @Parameter(property = "package", required = false,  defaultValue = "org.hibersap.model")
@@ -47,10 +53,22 @@ public class GenerateEntitiesMojo extends AbstractSAPMojo {
     private String outputDir;
 
 
+    @Parameter(property = "connectionProperties", required = true)
+    private String connectionProperties;
+
+    protected PrintStream shell = System.out;
+
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        ConnectionPropertiesManager connectionPropertiesManager;
+        try{
+            connectionPropertiesManager = new ConnectionPropertiesManager(this.connectionProperties);
+        }catch (IOException ex){
+            throw new MojoExecutionException(ex.getMessage());
+        }
+
         // The logic of our plugin will go here
-        final SessionManagerConfig sessionManagerConfig = createSessionManagerConfig();
+        final SessionManagerConfig sessionManagerConfig = createSessionManagerConfig(connectionPropertiesManager);
         final AnnotationConfiguration configuration = new AnnotationConfiguration( sessionManagerConfig );
         final SessionManager sessionManager = configuration.buildSessionManager();
         final SAPFunctionModuleSearch functionModuleSearch = new SAPFunctionModuleSearch( namePattern, maxResults );
@@ -89,6 +107,37 @@ public class GenerateEntitiesMojo extends AbstractSAPMojo {
         }
 
 
+    }
+
+
+
+
+    /**
+     * Creates the necessary session manager configuration for the function module search
+     *
+     * @return the session manager configuration
+     */
+    protected SessionManagerConfig createSessionManagerConfig(ConnectionPropertiesManager sapConnectionPropertiesManager) {
+
+        final SessionManagerConfig sessionManagerConfig = new SessionManagerConfig();
+
+        sessionManagerConfig.setName(sapConnectionPropertiesManager.getSAPProperty("session-manager.name"));
+        // Setting JCo context is not necessary, because it's set by default when creating a new SessionManangerConfig object
+        sessionManagerConfig.addAnnotatedClass(SAPFunctionModuleSearch.class);
+
+        //Filter JCo properties from property list
+        //New Set necessary, because the sapConnection properties shall not be affected
+        final Set<Map.Entry<Object, Object>> jcoConnectionProperties = new HashSet<Map.Entry<Object, Object>>(
+                sapConnectionPropertiesManager.getAllSAPProperties());
+        final FilterCollection filter = new FilterCollection(jcoConnectionProperties, "jco", "context");
+
+        filter.filter();
+
+        for (final Map.Entry<Object, Object> entry : jcoConnectionProperties) {
+            sessionManagerConfig.setProperty(entry.getKey().toString(), entry.getValue().toString());
+        }
+
+        return sessionManagerConfig;
     }
 
     private void saveJavaSource(JavaClassSource javaClass) throws IOException {

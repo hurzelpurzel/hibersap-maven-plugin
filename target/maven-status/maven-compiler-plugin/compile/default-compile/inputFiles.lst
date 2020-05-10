@@ -1,11 +1,9 @@
 /home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/generator/util/FilterCollection.java
 /home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/generator/exception/SessionManagerDuplicateException.java
 /home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/generator/sap/SAPFunctionModuleSearch.java
+/home/ludger/Development/workspace_oss/forge-addon-hibersap/target/classes/META-INF/maven/HelpMojo.java
 /home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/plugin/GenerateEntitiesMojo.java
-/home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/plugin/AbstractSAPMojo.java
-/home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/plugin/ListPropertiesMojo.java
 /home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/generator/manager/ConnectionPropertiesManager.java
-/home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/generator/manager/Configuration.java
 /home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/generator/sap/SAPEntityBuilder.java
 /home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/generator/util/Utils.java
 /home/ludger/Development/workspace_oss/forge-addon-hibersap/src/main/java/org/hibersap/generator/sap/SAPEntity.java
