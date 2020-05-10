@@ -124,6 +124,27 @@
             <artifactId>core</artifactId>
             <classifier>forge-addon</classifier>
         </dependency>
+        <dependency>
+            <!-- plugin interfaces and base classes -->
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.6.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- needed when injecting the Maven Project into a plugin  -->
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.6.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- annotations used to describe the plugin meta-data -->
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.5</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

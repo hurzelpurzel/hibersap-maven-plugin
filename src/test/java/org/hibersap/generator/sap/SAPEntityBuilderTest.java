@@ -29,8 +29,9 @@ import org.hibersap.mapping.model.BapiMapping;
 import org.hibersap.mapping.model.FieldMapping;
 import org.hibersap.mapping.model.StructureMapping;
 import org.hibersap.mapping.model.TableMapping;
-import org.jboss.forge.parser.java.Field;
-import org.jboss.forge.parser.java.JavaClass;
+
+import org.jboss.forge.roaster.model.source.FieldSource;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +51,7 @@ public class SAPEntityBuilderTest {
     private static final String CLASS_NAME = "mySAPClass";
     private static final String JAVA_PACKAGE = "myPackage";
 
-    private JavaClass javaClass;
+    private JavaClassSource javaClass;
 
     private BapiMapping createMapping() {
         final BapiMapping mapping = new BapiMapping( null, "BAPI_FLCONN_GETDETAIL", null );
@@ -128,14 +129,14 @@ public class SAPEntityBuilderTest {
         Assert.assertThat( this.javaClass.getFields().size(), is( 6 ) );
 
         for ( final String fieldName : allFieldNames ) {
-            Field<JavaClass> field = this.javaClass.getField( fieldName );
+            FieldSource<JavaClassSource> field = this.javaClass.getField( fieldName );
             Assert.assertThat( field, notNullValue() );
         }
     }
 
     @Test
     public void createsSimpleImportParameter() {
-        final Field<JavaClass> field = this.javaClass.getField( "_flightdate" );
+        final FieldSource<JavaClassSource> field = this.javaClass.getField( "_flightdate" );
 
         Assert.assertThat( field.getType(), equalTo( "Date" ) );
         Assert.assertThat( field.getAnnotations().size(), is( 2 ) );
@@ -147,7 +148,7 @@ public class SAPEntityBuilderTest {
 
     @Test
     public void createsComplexExportParameter() {
-        final Field<JavaClass> field = this.javaClass.getField( "_priceInfo" );
+        final FieldSource<JavaClassSource>  field = this.javaClass.getField( "_priceInfo" );
 
         Assert.assertThat( field.getType(), equalTo( "PriceInfo" ) );
         Assert.assertThat( field.getAnnotations().size(), is( 2 ) );
@@ -161,7 +162,7 @@ public class SAPEntityBuilderTest {
 
     @Test
     public void createsTableParamater() {
-        final Field<JavaClass> field = this.javaClass.getField( "_extensionOut" );
+        final FieldSource<JavaClassSource> field = this.javaClass.getField( "_extensionOut" );
 
         Assert.assertThat( field.getType(), equalTo( "List" ) );
         Assert.assertThat( field.getAnnotations().size(), is( 2 ) );
