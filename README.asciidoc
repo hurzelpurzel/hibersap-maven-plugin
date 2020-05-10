@@ -40,7 +40,7 @@ jco.destination.pool_capacity=1
 
 #Session-manager properties
 session-manager.name=SM001
----
+----
 
 Details can be seen in sister project  https://github.com/hurzelpurzel/sapgw-sample
 
