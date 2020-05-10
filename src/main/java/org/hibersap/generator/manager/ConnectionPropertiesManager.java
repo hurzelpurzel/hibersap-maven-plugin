@@ -40,18 +40,31 @@ import org.hibersap.generator.util.Utils;
  */
 public class ConnectionPropertiesManager {
 
-	/** The path to the default properties **/
+	/**
+	 * The path to the default properties
+	 **/
 	private final static String DEFAULT_PROPERTIES_PATH = "/META-INF/";
-	/** The filename for the connection properties **/
+	/**
+	 * The filename for the connection properties
+	 **/
 	private final static String SAP_PROPERTIES_FILENAME = "sap-connection.properties";
 
-	/** The SAP connection properties **/
+	/**
+	 * The SAP connection properties
+	 **/
 	private final Properties sapConnection = new Properties();//TODO sorted properties
 
-	/** The path to store the individual SAP connection properties **/
+	/**
+	 * The path to store the individual SAP connection properties
+	 **/
 	private final String sapPropertiesStorePath;
 
+
+	public ConnectionPropertiesManager() throws IOException{
+		this(ConnectionPropertiesManager.DEFAULT_PROPERTIES_PATH);
+    }
 	/**
+	 *
 	 * Constructor - Instantiates a new SAPConnectionPropertiesManager
 	 * 
 	 * The default SAP connection properties will be loaded at creation

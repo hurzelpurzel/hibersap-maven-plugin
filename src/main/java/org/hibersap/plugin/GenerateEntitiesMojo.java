@@ -1,4 +1,4 @@
-package org.plugin.hibersap;
+package org.hibersap.plugin;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -17,7 +17,6 @@ import org.hibersap.mapping.model.BapiMapping;
 import org.hibersap.session.Session;
 import org.hibersap.session.SessionManager;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
-import org.plugin.hibersap.AbstractSAPMojo;
 
 import java.io.File;
 import java.io.IOException;

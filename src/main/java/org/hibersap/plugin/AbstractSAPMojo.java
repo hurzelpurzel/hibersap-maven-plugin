@@ -1,18 +1,13 @@
-package org.plugin.hibersap;
+package org.hibersap.plugin;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.hibersap.configuration.xml.SessionManagerConfig;
 import org.hibersap.generator.manager.ConnectionPropertiesManager;
 import org.hibersap.generator.sap.SAPFunctionModuleSearch;
 import org.hibersap.generator.util.FilterCollection;
-import org.jboss.forge.addon.ui.command.AbstractUICommand;
-import org.jboss.forge.addon.ui.context.UIContext;
-import org.jboss.forge.addon.ui.metadata.UICommandMetadata;
-import org.jboss.forge.addon.ui.util.Categories;
-import org.jboss.forge.addon.ui.util.Metadata;
 
 import javax.inject.Inject;
-import java.io.OutputStream;
+
 import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.Map;

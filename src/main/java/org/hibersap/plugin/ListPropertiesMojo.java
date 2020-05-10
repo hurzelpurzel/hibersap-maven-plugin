@@ -1,4 +1,4 @@
-package org.plugin.hibersap;
+package org.hibersap.plugin;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -6,7 +6,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.plugin.hibersap.AbstractSAPMojo;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +15,7 @@ import java.util.Set;
  * that a new {@code exampleVersion} property to the current Maven project.
  * see: https://dzone.com/articles/tutorial-create-a-maven-plugin
  */
-@Mojo(name = "listProperites", defaultPhase = LifecyclePhase.INITIALIZE)
+@Mojo(name = "listProperties", defaultPhase = LifecyclePhase.INITIALIZE)
 public class ListPropertiesMojo extends AbstractSAPMojo {
 
 
