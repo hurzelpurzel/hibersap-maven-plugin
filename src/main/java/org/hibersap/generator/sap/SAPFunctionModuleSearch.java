@@ -34,6 +34,8 @@ import org.hibersap.annotations.Table;
  * 
  * @author Max Schwaab
  *
+ * For details about this BAPI
+ * see: https://success.jitterbit.com/display/DOC/Guide+to+Using+RFC_READ_TABLE+to+Query+SAP+Tables 
  */
 @Bapi(value = "RFC_READ_TABLE")
 public class SAPFunctionModuleSearch {
