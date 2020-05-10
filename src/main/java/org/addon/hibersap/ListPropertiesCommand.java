@@ -1,5 +1,6 @@
-package org.addon.hibersap.forge3;
+package org.addon.hibersap;
 
+import org.addon.hibersap.AbstractSAPUICommand;
 import org.jboss.forge.addon.ui.context.UIBuilder;
 import org.jboss.forge.addon.ui.context.UIExecutionContext;
 import org.jboss.forge.addon.ui.input.UIInput;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class ListPropertiesCommand extends AbstractSAPUICommand  {
+public class ListPropertiesCommand extends AbstractSAPUICommand {
 
 
 

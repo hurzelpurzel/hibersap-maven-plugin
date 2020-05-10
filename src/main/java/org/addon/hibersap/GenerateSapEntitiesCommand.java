@@ -1,5 +1,6 @@
-package org.addon.hibersap.forge3;
+package org.addon.hibersap;
 
+import org.addon.hibersap.AbstractSAPUICommand;
 import org.hibersap.configuration.AnnotationConfiguration;
 import org.hibersap.configuration.xml.SessionManagerConfig;
 import org.hibersap.generator.sap.SAPEntity;
@@ -28,7 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class GenerateSapEntitiesCommand extends AbstractSAPUICommand{
+public class GenerateSapEntitiesCommand extends AbstractSAPUICommand {
 
 
     @Inject
