@@ -21,21 +21,74 @@ The intention is to generate Hibersap Bapi classes by accessing the SAP RFC_READ
 |===
 
 == Setup
+Make sure that sapjco native libray is on java.library.path. 
+This could be set by Environment variable  MAVEN_OPTS.
 
-can be seen in sister project sapgw-sample
+=== sap-connection.properties
+A file named sap-connection.properties must contain the following connection details
+[source,txt]
+----
+#JCo properties
+jco.context=org.hibersap.execution.jco.JCoContext
+jco.client.client=001
+jco.client.user=sapuser
+jco.client.passwd=saphost
+jco.client.lang=en
+jco.client.ashost=saphost.example.com
+jco.client.sysnr=00
+jco.destination.pool_capacity=1
+
+#Session-manager properties
+session-manager.name=SM001
+---
+
+Details can be seen in sister project  https://github.com/hurzelpurzel/sapgw-sample
 
 === Add configuration to pom.xml 
-can be seen in sister project sapgw-sample
+|===
+|Propert |Optional|Comemnt
+|connectionProperties
+|no
+|Path to directory where sap-connection.properties can be found.
+|namePattern
+|no
+|Pattern to apply for search of Function Modules of interest
+|maxResult
+|yes
+|Maximal ammount of Function module to be generated. Default is 20
+|package
+|no
+|Base Package of generated Sources
+|outputDir
+|no
+|Folder to use for generated Java classes
+|===
 
-To use this addon, you must add it as a dependency in the *pom.xml* of your `forge-addon` classified artifact:
-(Make sure the dependency is put all the way to the left, and uses 3 spaces for indentation of GAV)
+
+To use this plugin, you must add it as a plugin in the *pom.xml* and configure it.
 [source,xml]
 ----
-<dependency>
-   <groupId>org.addon.hibersap</groupId>
-   <artifactId>addon-hibersap</artifactId>
-   <classifier>forge-addon</classifier>
-   <version>${version}</version>
-</dependency>
+         <plugin>
+                <groupId>org.hibersap</groupId>
+                <artifactId>generator</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>generateSapEntities</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <connectionProperties>${project.basedir}/../</connectionProperties>
+                            <namePattern>Z*</namePattern>
+                            <package>net.atos.gw.hibersap.model</package>
+                            <outputDir>${pom.basedir}/target/generated-sources/</outputDir>
+                        </configuration>
+                        <goals>
+                            <goal>generateSapEntities</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
 ----
 == Features
+Generate Hiberap Model (Bapi) objects from given SAP System using the RFC dictionary.
