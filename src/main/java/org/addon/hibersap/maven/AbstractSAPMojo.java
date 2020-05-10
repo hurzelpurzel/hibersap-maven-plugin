@@ -20,7 +20,7 @@ import java.util.Set;
 
 
 /**
- * See :
+ * See : https://github.com/shillner/maven-cdi-plugin-utils
  */
 public abstract class AbstractSAPMojo<shell> extends AbstractMojo {
 
