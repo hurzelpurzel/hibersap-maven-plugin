@@ -24,6 +24,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import java.nio.file.Paths;
+
 /**
  * 
  * @author Max Schwaab
@@ -91,6 +93,11 @@ public class UtilsTest {
 	@Test
 	public void toCamelCaseSpacer() {
 		Assert.assertEquals("ConvertThisText", Utils.toCamelCase("CONVERT/THIS/TEXT", '/'));
+	}
+
+	@Test
+	public void package2Path() {
+		Assert.assertEquals(Paths.get("/home/ludger/Development/workspace_oss/sapgw-sample/target/generated-sources/net/atos/gw/hibersap/model"), Utils.package2Path("/home/ludger/Development/workspace_oss/sapgw-sample/target/generated-sources/", "net.atos.gw.hibersap.model"));
 	}
 
 }

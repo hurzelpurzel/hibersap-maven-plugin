@@ -24,6 +24,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +40,13 @@ import java.util.Set;
 public class GenerateEntitiesMojo extends AbstractMojo {
 
 
-
-
-    @Parameter(property ="namePattern", required = true)
+    @Parameter(property = "namePattern", required = true)
     private String namePattern;
 
-    @Parameter(property = "maxResults", required = false,  defaultValue = "20")
+    @Parameter(property = "maxResults", required = false, defaultValue = "20")
     private Integer maxResults;
 
-    @Parameter(property = "package", required = false,  defaultValue = "org.hibersap.model")
+    @Parameter(property = "javaPackage", required = false, defaultValue = "org.hibersap.model")
     private String javaPackage;
 
     @Parameter(property = "outputDir", required = true)
@@ -56,26 +56,26 @@ public class GenerateEntitiesMojo extends AbstractMojo {
     @Parameter(property = "connectionProperties", required = true)
     private String connectionProperties;
 
-    protected PrintStream shell = System.out;
+    private PrintStream shell = System.out;
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         ConnectionPropertiesManager connectionPropertiesManager;
-        try{
+        try {
             connectionPropertiesManager = new ConnectionPropertiesManager(this.connectionProperties);
-        }catch (IOException ex){
+        } catch (IOException ex) {
             throw new MojoExecutionException(ex.getMessage());
         }
 
         // The logic of our plugin will go here
         final SessionManagerConfig sessionManagerConfig = createSessionManagerConfig(connectionPropertiesManager);
-        final AnnotationConfiguration configuration = new AnnotationConfiguration( sessionManagerConfig );
+        final AnnotationConfiguration configuration = new AnnotationConfiguration(sessionManagerConfig);
         final SessionManager sessionManager = configuration.buildSessionManager();
-        final SAPFunctionModuleSearch functionModuleSearch = new SAPFunctionModuleSearch( namePattern, maxResults );
+        final SAPFunctionModuleSearch functionModuleSearch = new SAPFunctionModuleSearch(namePattern, maxResults);
         final Session session = sessionManager.openSession();
 
         try {
-            session.execute( functionModuleSearch );
+            session.execute(functionModuleSearch);
         } finally {
             session.close();
         }
@@ -96,20 +96,21 @@ public class GenerateEntitiesMojo extends AbstractMojo {
             final Set<JavaClassSource> javaClasses = sapEntity.getStructureClasses();
             javaClasses.add(sapEntity.getBapiClass());
 
-            for (final JavaClassSource javaClass : javaClasses) {
-                try {
-                    saveJavaSource(javaClass);
-                } catch (IOException ex) {
-                    throw new MojoExecutionException(ex.getMessage());
-                }
+            try {
+                File targetFileDir = createPackageDir();
+                for (final JavaClassSource javaClass : javaClasses) {
 
+                    saveJavaSource(targetFileDir, javaClass);
+
+
+                }
+            } catch (IOException ex) {
+                throw new MojoExecutionException(ex.getMessage());
             }
         }
 
 
     }
-
-
 
 
     /**
@@ -140,9 +141,20 @@ public class GenerateEntitiesMojo extends AbstractMojo {
         return sessionManagerConfig;
     }
 
-    private void saveJavaSource(JavaClassSource javaClass) throws IOException {
-        FileUtils.writeStringToFile(new File(outputDir,javaClass.getQualifiedName()), javaClass.toString(), "UTF-8");
-        shell.println( "Created SAP entity [" + javaClass.getQualifiedName() + "]" );
+    private File createPackageDir() throws IOException {
+        Path targetPath = Utils.package2Path(outputDir, javaPackage);
+        File targetFileDir = targetPath.toFile();
+        if (!targetFileDir.exists() && !targetFileDir.isDirectory()) {
+            Files.createDirectories(targetPath);
+            shell.println("Created package Directory [" + targetPath + "]");
+        }
+        return targetFileDir;
+    }
+
+    private void saveJavaSource(final File targetFileDir, final JavaClassSource javaClass) throws IOException {
+
+        FileUtils.writeStringToFile(new File(targetFileDir, javaClass.getName() + ".java"), javaClass.toString(), "UTF-8");
+        shell.println("Created SAP entity [" + javaClass.getQualifiedName() + "]");
     }
 
 

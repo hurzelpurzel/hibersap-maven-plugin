@@ -58,7 +58,7 @@ Details can be seen in sister project  https://github.com/hurzelpurzel/sapgw-sam
 |maxResult
 |yes
 |Maximal ammount of Function module to be generated. Default is 20
-|package
+|javaPackage
 |no
 |Base Package of generated Sources
 |outputDir

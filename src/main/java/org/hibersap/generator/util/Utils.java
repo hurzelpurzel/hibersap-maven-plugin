@@ -19,10 +19,14 @@
 
 package org.hibersap.generator.util;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * Utilities for the hibersap-plugin project
  * 
- * @author Max Schwaab
+ * @author Max Schwaab, Ludger Pottmeier
  *
  */
 public class Utils {
@@ -38,6 +42,16 @@ public class Utils {
 			throw new IllegalArgumentException("Expected path ends with [\\] or [/], but was "
 					+ path.charAt(path.length() - 1));
 		}
+	}
+
+	/**
+	 * Get the path instead of the package
+	 *
+	 * @param javapackage
+	 * @return
+	 */
+	public static Path package2Path(final String basedir, final String javapackage){
+		return Paths.get((basedir.endsWith(File.separator)?basedir:basedir+File.separator)+ javapackage.replaceAll("\\.", File.separator));
 	}
 
 	/**
