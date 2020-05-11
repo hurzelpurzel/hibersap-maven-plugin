@@ -53,7 +53,7 @@ public class SAPFunctionModuleSearch {
 	@SuppressWarnings("unused")
 	@Table
 	@Parameter(value = "OPTIONS")
-	private final List<Option> functionNamePattern;
+	private final List<Option> optionList;
 
 	@SuppressWarnings("unused")
 	@Table
@@ -64,6 +64,9 @@ public class SAPFunctionModuleSearch {
 	@Parameter(value = "DATA")
 	private List<FunctionModule> functionModules;
 
+
+	private final String searchpattern;
+
 	/**
 	 * Constructor - creates an instance of FunctionModuleSearch
 	 * 
@@ -71,9 +74,10 @@ public class SAPFunctionModuleSearch {
 	 * @param maxResults - Sets the maximum number of results. Set 0 for no limitation.
 	 */
 	public SAPFunctionModuleSearch(final String functionNamePattern, final int maxResults) {
+		this.searchpattern=functionNamePattern;
 		final String sapPattern = functionNamePattern.replaceAll("\\*", "%").replaceAll("\\?", "_");
 
-		this.functionNamePattern = Collections.singletonList(new Option(sapPattern));
+		this.optionList = Collections.singletonList(new Option(sapPattern));
 		this.rowCount = maxResults;
 	}
 
@@ -142,4 +146,11 @@ public class SAPFunctionModuleSearch {
 
 	}
 
+
+	@Override
+	public String toString() {
+		return "SAPFunctionModuleSearch{" +
+				"searchpattern='" + searchpattern + '\'' +
+				'}';
+	}
 }

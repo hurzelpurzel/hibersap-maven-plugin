@@ -26,10 +26,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * An example Maven Mojo that resolves the current project's git revision and adds
@@ -71,15 +68,38 @@ public class GenerateEntitiesMojo extends AbstractMojo {
         final SessionManagerConfig sessionManagerConfig = createSessionManagerConfig(connectionPropertiesManager);
         final AnnotationConfiguration configuration = new AnnotationConfiguration(sessionManagerConfig);
         final SessionManager sessionManager = configuration.buildSessionManager();
-        final SAPFunctionModuleSearch functionModuleSearch = new SAPFunctionModuleSearch(namePattern, maxResults);
+        String  namePattern = this.namePattern;
+        ArrayList<SAPFunctionModuleSearch> searches = new ArrayList<SAPFunctionModuleSearch>();
+        if(namePattern.contains(",")){
+             // in this comma separated lsit was given
+            String[] bapis =namePattern.split(",");
+            for (int i = 0; i < bapis.length; i++) {
+                searches.add(new SAPFunctionModuleSearch(bapis[i].trim(), maxResults));
+            }
+        }else{
+            searches.add(new SAPFunctionModuleSearch(namePattern, maxResults));
+        }
+
         final Session session = sessionManager.openSession();
 
         try {
-            session.execute(functionModuleSearch);
-        } finally {
+            searches.forEach( functionModuleSearch ->session.execute(functionModuleSearch));
+
+        } catch(Exception ex){
+            throw new MojoExecutionException(ex.getMessage());
+        }finally {
             session.close();
         }
+        for (SAPFunctionModuleSearch functionModuleSearch : searches)
+        {
+            processSearch(sessionManager, functionModuleSearch);
+        }
 
+
+
+    }
+
+    private void processSearch(SessionManager sessionManager, SAPFunctionModuleSearch functionModuleSearch) throws MojoExecutionException {
         final List<String> functionNames = functionModuleSearch.getFunctionNames();
         final ReverseBapiMapper reverseBAPIMapper = new ReverseBapiMapper();
         final SAPEntityBuilder sapEntityBuilder = new SAPEntityBuilder();
@@ -108,8 +128,6 @@ public class GenerateEntitiesMojo extends AbstractMojo {
                 throw new MojoExecutionException(ex.getMessage());
             }
         }
-
-
     }
 
 

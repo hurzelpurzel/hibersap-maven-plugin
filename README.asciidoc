@@ -54,7 +54,7 @@ Details can be seen in sister project  https://github.com/hurzelpurzel/sapgw-sam
 |Path to directory where sap-connection.properties can be found.
 |namePattern
 |no
-|Pattern to apply for search of Function Modules of interest
+|Comma seperated list uf bapis or a Pattern containing * to apply for search of Function Modules of interest
 |maxResult
 |yes
 |Maximal ammount of Function module to be generated. Default is 20
