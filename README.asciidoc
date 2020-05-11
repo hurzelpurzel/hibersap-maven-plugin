@@ -82,7 +82,7 @@ To use this plugin, you must add it as a plugin in the *pom.xml* and configure i
                         <configuration>
                             <connectionProperties>${project.basedir}/../</connectionProperties>
                             <namePattern>Z*</namePattern>
-                            <package>net.atos.gw.hibersap.model</package>
+                            <javaPackage>net.atos.gw.hibersap.model</javaPackage>
                             <outputDir>${pom.basedir}/target/generated-sources/</outputDir>
                         </configuration>
                         <goals>
