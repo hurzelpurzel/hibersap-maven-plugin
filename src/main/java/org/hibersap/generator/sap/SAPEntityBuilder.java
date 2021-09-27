@@ -248,11 +248,11 @@ public class SAPEntityBuilder {
 		switch (parameterMapping.getParamType()) {
 		case STRUCTURE:
 			final StructureMapping structureMapping = (StructureMapping) parameterMapping;
-			fieldMappings =  cast(structureMapping.getParameters());
+			fieldMappings =  structureMapping.getParameters();
 			break;
 		case TABLE:
 			final TableMapping tableMapping = (TableMapping) parameterMapping;
-			fieldMappings = cast(tableMapping.getComponentParameter().getParameters());
+			fieldMappings = tableMapping.getComponentParameter().getParameters();
 			break;
 		default:
 			throw new HibersapException("Parameter type not expected: " + parameterMapping.getParamType());

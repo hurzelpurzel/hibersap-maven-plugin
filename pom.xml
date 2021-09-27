@@ -66,7 +66,7 @@
         <jco.version>[3.0.0,)</jco.version>
         <servlet-api.version>3.0.1</servlet-api.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
-        <hibersap.version>[1.1.0,)</hibersap.version>
+        <hibersap.version>1.2.0</hibersap.version>
 
         <version.roaster>2.21.2.Final</version.roaster>
     </properties>
