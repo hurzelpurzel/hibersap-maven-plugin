@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.hibersap</groupId>
     <artifactId>generator</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <repositories>
@@ -34,12 +34,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.15.2</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>descriptor</goal>
-                            <goal>report</goal>
                             <goal>helpmojo</goal>
                        </goals>
                     </execution>
@@ -58,8 +57,9 @@
         </license>
     </licenses>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <jco.localrepo>file:${user.home}/.localrepo/</jco.localrepo>
@@ -68,7 +68,7 @@
         <validation-api.version>1.0.0.GA</validation-api.version>
         <hibersap.version>[1.1.0,)</hibersap.version>
 
-        <version.roaster>2.21.2.Final</version.roaster>
+        <version.roaster>2.31.1.Final</version.roaster>
     </properties>
 
     <dependencies>
@@ -76,7 +76,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.7</version>
+            <version>2.22.0</version>
         </dependency>
 
         <dependency>
@@ -111,21 +111,21 @@
             <!-- plugin interfaces and base classes -->
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
-            <version>3.6.0</version>
+            <version>3.9.16</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <!-- needed when injecting the Maven Project into a plugin  -->
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
-            <version>3.6.0</version>
+            <version>3.9.16</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <!-- annotations used to describe the plugin meta-data -->
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-annotations</artifactId>
-            <version>3.5</version>
+            <version>3.15.2</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
