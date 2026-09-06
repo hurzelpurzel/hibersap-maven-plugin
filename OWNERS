@@ -1,0 +1,10 @@
+# See https://docs.github.com/en/repositories/managing-access-to-your-repositories/managing-people-s-access-to-your-repository-with-roles/about-custom-repository-roles
+
+approvers:
+- hurzelpurzel
+
+reviewers:
+- hurzelpurzel
+
+options:
+  no_parent_owners: true
